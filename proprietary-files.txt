@@ -108,7 +108,6 @@ vendor/firmware/volumemonitor.bin
 -vendor/lib/libaudioparamupdate.so
 -vendor/lib/lib_SamsungRec_07020.so
 -vendor/lib/liblastaboxmsg.so
--vendor/lib/lib_lvacfs.so
 -vendor/lib64/libengmode_client.so
 -vendor/lib64/libsemnativecarrierfeature.so
 -vendor/lib/libsemnativecarrierfeature.so
