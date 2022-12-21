@@ -52,21 +52,9 @@ on init
     chmod 664 /dev/cpuset/cpus
     write /dev/cpuset/top-app/cpus 0-7
     write /dev/cpuset/foreground/cpus 0-2,4-7
-    write /dev/cpuset/background/cpus 0-2
+    write /dev/cpuset/background/cpus 0-1
     write /dev/cpuset/system-background/cpus 0-2
     write /dev/cpuset/restricted/cpus 0-2
-
-    mkdir /dev/cpuset/sf
-    copy /dev/cpuset/cpus /dev/cpuset/sf/cpus
-    copy /dev/cpuset/mems /dev/cpuset/sf/mems
-
-    chown system system /dev/cpuset/sf/tasks
-    chown system system /dev/cpuset/sf/cgroup.procs
-    chown system system /dev/cpuset/sf/cpus
-
-    chmod 0664 /dev/cpuset/sf/cpus
-    chown system system /dev/cpuset/sf/cpus
-    write /dev/cpuset/sf/cpus 0-7
 
     chown system system /dev/cpuset/tasks
     chown system system /dev/cpuset/cgroup.procs
@@ -314,31 +302,15 @@ on init
     chown system radio /sys/class/sensors/ssp_sensor/sensor_dump
 
     # Permissions for Fingerprint sensor
-    chmod 0660 /dev/qbt2000_fd
-    chmod 0660 /dev/qbt2000_ipc
-    chmod 0660 /dev/qbtspi
-    chown system system /dev/qbt2000_fd
-    chown system system /dev/qbt2000_ipc
-    chown system system /dev/qbtspi
+    chmod 0660 /dev/goodix_fp
 
     chown system radio /sys/class/fingerprint/fingerprint/type_check
     chown system radio /sys/class/fingerprint/fingerprint/name
     chown system radio /sys/class/fingerprint/fingerprint/vendor
     chown system radio /sys/class/fingerprint/fingerprint/adm
     chown system radio /sys/class/fingerprint/fingerprint/bfs_values
-    chown system radio /sys/class/fingerprint/fingerprint/hbm
-    chown system radio /sys/class/fingerprint/fingerprint/position
-    chown system radio /sys/class/fingerprint/fingerprint/cbgecnt
-    chown system radio /sys/class/fingerprint/fingerprint/intcnt
-    chown system radio /sys/class/fingerprint/fingerprint/resetcnt
-    chown system radio /sys/class/fingerprint/fingerprint/wuhbtest
+    chown system radio /sys/class/fingerprint/fingerprint/rb
 
-    mkdir /data/vendor/misc 0770 system system
-    mkdir /data/vendor/misc/qti_fp 0770 system system
-    mkdir /data/vendor/misc/qti_fp/bg_estimation 0770 system system
-    mkdir /data/vendor/misc/qti_fp/calib_test 0770 system system
-    mkdir /data/vendor/misc/qti_fp/template 0770 system system
-    mkdir /data/vendor/fpSnrTest 0770 system system
     mkdir /efs/biometrics 0770 system system
     mkdir /efs/biometrics/meta 0770 system system
 
@@ -648,7 +620,6 @@ on post-fs-data
     mkdir /dev/freezer/thaw
     write /dev/freezer/frozen/freezer.state FROZEN
     write /dev/freezer/thaw/freezer.state THAWED
-    write /dev/freezer/frozen/freezer.killable 1
 
     # MARs for freecess
     chown system system /dev/freezer
@@ -673,6 +644,9 @@ on post-fs-data
     chown system system /sys/devices/platform/npu_exynos/qos_freq/dnc_freq_maxlock
 
 on boot
+    # SSWAP
+    write /proc/sys/vm/swappiness 160
+
     # SDHMS Slowdown : Cpuset
     mkdir /dev/cpuset/abnormal
     write /dev/cpuset/abnormal/cpus 0-3
@@ -685,7 +659,7 @@ on boot
     chmod 0664 /dev/cpuset/abnormal/cpus
 
     mkdir /dev/cpuset/moderate
-    write /dev/cpuset/moderate/cpus 0-2,4-6
+    write /dev/cpuset/moderate/cpus 0-2
     copy /dev/cpuset/mems /dev/cpuset/moderate/mems
 
     chown system system /dev/cpuset/moderate
@@ -756,6 +730,7 @@ on boot
     chmod 0664 /efs/FactoryApp/version
     chmod 0664 /efs/FactoryApp/predefine0
     chmod 0664 /efs/FactoryApp/predefine1
+    chmod 0664 /efs/FactoryApp/predefine2
 
     # PMIC: S2MPS19 manual reset
     chown system system /sys/class/sec/ap_pmic/manual_reset
@@ -808,6 +783,10 @@ on boot
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/state
     chown bluetooth bluetooth /sys/class/rfkill/rfkill0/type
+    chmod 0660 /dev/btpower
+    chown bluetooth system /dev/btpower
+    # Create directory used for bt chip dump collection
+    mkdir /data/vendor/ssrdump 0770 root system
     # for BT MAC address
     mkdir /mnt/vendor/efs/bluetooth 0770 system bluetooth
     # if already exist
@@ -851,6 +830,10 @@ on boot
     chmod 0660 /sys/class/sec/switch/uart_sel
     chown system system /sys/class/sec/switch/uart_sel
 
+    # Permission for usb_data_enabled
+    chown root system /sys/class/usb_notify/usb_control/usb_data_enabled
+    chmod 0664 /sys/class/usb_notify/usb_control/usb_data_enabled
+
     # Permissions for  LSI NFC
     chmod 0660 /dev/sec-nfc
     chown nfc nfc /dev/sec-nfc
@@ -863,6 +846,9 @@ on boot
     # Permissions for NXP ESE
     chmod 0660 /dev/p61
     chown system system /dev/p61
+
+    # WLAN
+    start vendor.cnss_diag
 
     # Permissions for Displayport
     # DP AUX switch control for factory test
@@ -963,6 +949,9 @@ on fs
     chown system system /sys/class/lcd/panel/ccd_state
     chown system radio /sys/class/lcd/panel/conn_det
     chown system system /sys/class/lcd/panel/vrr
+    chown system system /sys/class/lcd/panel/mask_brightness
+    chown system system /sys/class/lcd/panel/actual_mask_brightness
+    chown system system /sys/class/lcd/panel/enable_fd
 
     # Permissions for LCD COPR
     chown system system /sys/class/lcd/panel/copr
@@ -1001,7 +990,6 @@ on fs
     # Permissions for self_display
     chmod 0660 /dev/self_display
     chown system system /dev/self_display
-
 
     # Permissions for mAFPC
     chmod 0660 /dev/mafpc
@@ -1046,3 +1034,16 @@ service watchdogd /system/bin/watchdogd 10 20
     class core
     oneshot
     seclabel u:r:watchdogd:s0
+
+    # WLAN
+service vendor.cnss_diag /system/vendor/bin/cnss_diag -f -b 128 -t HELIUM -F
+    class main
+    user wifi
+    group system wifi inet sdcard_rw media_rw
+    oneshot
+
+service vendor.cnss_dumpcollector /system/vendor/bin/cnss_dumpcollector
+    class main
+    user wifi
+    group system wifi inet sdcard_rw media_rw
+    oneshot
