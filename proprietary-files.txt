@@ -72,6 +72,7 @@ vendor/firmware/volumemonitor.bin
 -vendor/lib/vndk/libtinyalsa.so;MODULE=libtinyalsa.exynos990
 -vendor/lib/vndk/libaudioroute.so;MODULE=libaudioroute.exynos990
 -vendor/lib/libSamsungPostProcessConvertor.so
+-vendor/lib/libspatializerparamstorage.so
 -vendor/lib/lib_SoundAlive_3DPosition_ver202.so
 -vendor/lib/lib_SoundAlive_AlbumArt_ver105.so
 -vendor/lib/lib_SoundAlive_SRC384_ver320.so
@@ -90,6 +91,7 @@ vendor/firmware/volumemonitor.bin
 -vendor/lib/soundfx/libmysound.so
 -vendor/lib/soundfx/libmyspace.so
 -vendor/lib/soundfx/libplaybackrecorder.so
+-vendor/lib64/libspatializerparamstorage.so
 -vendor/lib64/hw/vendor.samsung.hardware.audio@1.0-impl.so
 -vendor/lib64/lib_SoundAlive_3DPosition_ver202.so
 -vendor/lib64/lib_SoundAlive_AlbumArt_ver105.so
@@ -386,6 +388,8 @@ vendor/etc/plmn_se13.bin
 -vendor/lib64/libsecnativefeature.so
 -vendor/lib64/libsecure_storage.so
 -vendor/lib64/libsecril-client.so;MODULE=libsecril-client.exynos990
+-vendor/lib64/libSemDataProps.so
+-vendor/lib64/libSemTelephonyProps.so
 -vendor/lib64/vendor.samsung.hardware.radio.bridge@2.0.so
 -vendor/lib64/vendor.samsung.hardware.radio.bridge@2.1.so
 -vendor/lib64/vendor.samsung.hardware.radio.channel@2.0.so
