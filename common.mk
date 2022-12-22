@@ -55,8 +55,7 @@ TARGET_EXCLUDES_AUDIOFX := true
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0-impl:64 \
-    android.hardware.bluetooth@1.0-service
+    android.hardware.bluetooth@1.0.vendor
 
 # Boot animation
 TARGET_BOOTANIMATION_HALF_RES := true
@@ -274,7 +273,7 @@ PRODUCT_PACKAGES += \
 
 # Secure Element
 PRODUCT_PACKAGES += \
-    android.hardware.secure_element@1.0.vendor:64
+    android.hardware.secure_element@1.2.vendor:64
 
 # Sensors
 PRODUCT_PACKAGES += \
