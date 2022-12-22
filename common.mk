@@ -56,8 +56,7 @@ TARGET_EXCLUDES_AUDIOFX := true
 # Bluetooth
 PRODUCT_PACKAGES += \
     android.hardware.bluetooth@1.0-impl:64 \
-    android.hardware.bluetooth@1.0-service \
-    libbt-vendor:64
+    android.hardware.bluetooth@1.0-service
 
 # Boot animation
 TARGET_BOOTANIMATION_HALF_RES := true
