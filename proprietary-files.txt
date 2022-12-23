@@ -250,6 +250,7 @@ vendor/etc/init/vendor.samsung_slsi.hardware.eden_runtime@1.0-service.rc
 -vendor/lib64/libir.so
 
 # Fingerprint
+vendor/etc/init/init.fingerprint.rc
 -vendor/lib/libbauthserver.so
 -vendor/lib/libbauthtzcommon.so
 -vendor/lib/libegis_fp_normal_sensor_test.so
@@ -331,6 +332,7 @@ vendor/etc/init/android.hardware.neuralnetworks@1.3-service.eden-drv.rc
 
 # NFC
 system/etc/libnfc-nci.conf:product/etc/libnfc-nci.conf
+vendor/etc/init/init.nfc.samsung.rc
 vendor/firmware/nfc/sec_s3nrn4v_firmware.bin
 
 # OMX
@@ -372,8 +374,10 @@ vendor/firmware/nfc/sec_s3nrn4v_firmware.bin
 vendor/etc/init/init.baseband.rc
 vendor/etc/init/init.vendor.rilchip.rc
 vendor/etc/init/init.vendor.rilcommon.rc
+vendor/etc/init/init.rilmcpsd.rc
 vendor/etc/plmn_delta.bin
 vendor/etc/plmn_delta_attaio.bin
+vendor/etc/plmn_delta_hktw.bin
 vendor/etc/plmn_delta_usagsm.bin
 vendor/etc/plmn_se13.bin
 -vendor/lib/libaudio-ril.so
